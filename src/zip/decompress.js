@@ -1,6 +1,6 @@
 import { pipeline } from 'node:stream/promises';
 import { resolve, basename } from 'node:path';
-import zlib from 'zlib';
+import { createBrotliDecompress } from 'node:zlib';
 import { cwd } from 'node:process';
 import { createReadStream, createWriteStream } from 'node:fs';
 
@@ -12,10 +12,10 @@ export async function decompress(src, dest) {
     const destPath = resolve(cwd(), dest, basename(src).replace('.br', ''));
     const readStream = createReadStream(srcPath);
     const writeStream = createWriteStream(destPath, { flags: 'wx' });
-    const gunzip = zlib.createGunzip();
+    const brotli = createBrotliDecompress();
     console.log(`Start decompressing ${srcPath} to ${destPath}`);
-    await pipeline(readStream, gunzip, writeStream);
-    console.log('Compression completed');
+    await pipeline(readStream, brotli, writeStream);
+    console.log('Decompression completed');
   } catch {
     throw new Error(OperationFailedMessage);
   }

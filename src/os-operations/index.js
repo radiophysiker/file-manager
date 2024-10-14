@@ -1,6 +1,8 @@
 import { EOL, cpus, homedir, userInfo } from 'node:os';
 import { arch } from 'node:process';
 
+import { InvalidInputMessage } from "../const.js";
+
 export function osInfo(arg) {
   switch (arg) {
     case '--EOL':
@@ -23,6 +25,6 @@ export function osInfo(arg) {
       console.log(`CPU Architecture: ${arch}`);
       break;
     default:
-      console.log('Invalid input');
+      console.log(InvalidInputMessage);
   }
 }

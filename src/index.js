@@ -7,7 +7,7 @@ import { osInfo } from './os-operations/index.js';
 import { hashFile } from './hash/index.js';
 import { compress, decompress } from './zip/index.js';
 import { printCWD } from './utils.js';
-import { OperationFailedMessage } from  './const.js';
+import { OperationFailedMessage, InvalidInputMessage } from  './const.js';
 
 const args = process.argv.slice(2);
 const usernameArg = args.find(arg => arg.startsWith('--username='));
@@ -75,7 +75,7 @@ rl.on('line', async (input) => {
         await decompress(args[0], args[1]);
         break;
       default:
-        console.log('Invalid input');
+        console.log(InvalidInputMessage);
     }
   } catch (error) {
     console.log(OperationFailedMessage);
